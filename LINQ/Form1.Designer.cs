@@ -1,5 +1,5 @@
 ﻿
-namespace UserMaintenance
+namespace LINQ
 {
     partial class Form1
     {
