@@ -32,22 +32,23 @@ namespace LINQ
                     var line = sr.ReadLine().Split(';');
 
                     var countryName = line[2];
-                    var currentCountry = (from c in countries
-                                          where c.Name.Equals(countryName)
-                                          select c).FirstOrDefault();
-                    if (currentCountry == null)
+                    var country = AddCountry(countryName);
+
+                    var ramen = new Ramen()
                     {
-                        currentCountry = new Country()
-                        {
-                            ID = countries.Count + 1,
-                            Name = countryName
-                        };
-                        countries.Add(currentCountry);
-                    }
+                        ID = ramens.Count + 1,
+                        Brand = line[0],
+                        Name = line[1],
+                        CountryFK = country.ID,
+                        Country = country,
+                        Stars = Convert.ToDouble(line[3])
+                    };
+                    ramens.Add(ramen);
                 }
             }
         }
-        private void AddCountry(string countryName)
+
+        private Country AddCountry(string countryName)
         {
             var currentCountry = (from c in countries
                                   where c.Name.Equals(countryName)
@@ -61,6 +62,8 @@ namespace LINQ
                 };
                 countries.Add(currentCountry);
             }
+
+            return currentCountry;
         }
     }
 }
